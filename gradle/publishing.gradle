@@ -59,7 +59,7 @@ def pomConfig = {
     }
     developers {
         [
-            neo : 'Thomas Anderson'
+            aalmiray : 'Andres Almiray'
         ].each { devId, devName ->
             developer {
                 id devId
