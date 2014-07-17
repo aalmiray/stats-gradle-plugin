@@ -1,0 +1,104 @@
+Stats Gradle Plugin
+===================
+:version: 0.1.0
+
+image:https://travis-ci.org/aalmiray/stats-gradle-plugin.png?branch=master["Build Status", link="https://travis-ci.org/aalmiray/stats-gradle-plugin"]
+image:https://coveralls.io/repos/aalmiray/stats-gradle-plugin/badge.png["Coverage Status", link="https://coveralls.io/r/aalmiray/stats-gradle-plugin"]
+image:http://img.shields.io/:semver-{version}-blue.svg["Semantic Versioning", link="http://semver.org"]
+
+image::https://api.bintray.com/packages/aalmiray/kordamp/stats-gradle-plugin/images/download.png["Bintray", link="https://bintray.com/aalmiray/kordamp/stats-gradle-plugin"]
+
+== Stats Gradle Plugin
+
+A Gradle plugin for counting lines of code in the same fashion as the
+http://griffon.codehaus.org[griffon] stats command.
+
+== Requirements
+
+ - Gradle 2.x and JDK6.
+
+== Usage
+
+The plugin is available from https://bintray.com[Bintray's JCenter]. The latest release
+is {version}. You can use it as follows
+
+[source,groovy]
+[subs="attributes"]
+----
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.kordamp.gradle:stats-gradle-plugin:{version}'
+    }
+}
+
+apply plugin: 'org.kordamp.stats'
+----
+
+The plugin adds a new task named +stats+. This task is responsible for computing
+lines of code. The default configuration is good enough to work with standard
+Java or Groovy projects without additional setup. Invoking this task in a plain
+Java project yields something like the following output
+
+[source]
+----
+$ gradle stats
+:stats
+
+    +----------------------+-------+-------+
+    | Name                 | Files |  LOC  |
+    +----------------------+-------+-------+
+    | Java Sources         |     1 |     5 |
+    +----------------------+-------+-------+
+    | Totals               |     1 |     5 |
+    +----------------------+-------+-------+
+
+----
+
+== Configuration
+
+The following properties can be configured for the +stats+ task
+
+formats:: List of output formats. Valid values are +xml+, +html+ and +txt+.
+reportDir:: Directory where output reports should be placed. default value is
++project.file("${project.buildDir}/reports/stats")+
+paths:: Maps of additional source paths that contain sources to be counted.
+
+The following configuration can be used in a Griffon project
+
+[source,groovy]
+----
+stats {
+    formats = ['xml', 'html', 'txt']
+    paths = [
+        model:      [name: 'Models',      path: 'griffon-app/models'],
+        view:       [name: 'Views',       path: 'griffon-app/views'],
+        controller: [name: 'Controllers', path: 'griffon-app/controllers'],
+        service:    [name: 'Services',    path: 'griffon-app/services'],
+        config:     [name: 'Config',      path: 'griffon-app/conf'],
+        lifecycle:  [name: 'Lifecycle',   path: 'griffon-app/lifecycle']
+    ]
+}
+----
+
+Which may make the +stats+ task output something similar to
+
+[source,groovy]
+----
+    +----------------------+-------+-------+
+    | Name                 | Files |  LOC  |
+    +----------------------+-------+-------+
+    | Groovy Sources       |     4 |    28 |
+    | Java Sources         |     1 |     2 |
+    | Groovy Test Sources  |     1 |    16 |
+    | Models               |     1 |     8 |
+    | Views                |     1 |    24 |
+    | Controllers          |     1 |    10 |
+    | Config               |     1 |    12 |
+    | Lifecycle            |     1 |    16 |
+    +----------------------+-------+-------+
+    | Totals               |    11 |   116 |
+    +----------------------+-------+-------+
+----
