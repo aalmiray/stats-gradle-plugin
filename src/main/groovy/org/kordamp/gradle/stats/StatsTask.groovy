@@ -84,6 +84,7 @@ class StatsTask extends DefaultTask {
             merged.putAll(paths)
             merged.each { type, info ->
                 File dir = project.file(info.path)
+                if (!dir.exists()) return
                 dir.eachFileRecurse { File file ->
                     if (file.file) {
                         if (file.name.endsWith('.groovy')) {

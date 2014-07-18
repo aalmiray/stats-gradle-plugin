@@ -106,7 +106,7 @@ bintray {
         version {
             vcsTag = project.version
             attributes = [
-                'gradle-plugin': 'org.kordamp.gradle.stats:org.kordamp:stats-gradle-plugin'
+                'gradle-plugin': 'org.kordamp.gradle.stats:org.kordamp.gradle:stats-gradle-plugin'
             ]
         }
     }
