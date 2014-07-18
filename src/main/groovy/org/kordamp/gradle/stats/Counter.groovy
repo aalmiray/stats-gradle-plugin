@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kordamp.gradle.plugins.stats
+package org.kordamp.gradle.stats
 
 /**
  * @author Andres Almiray

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kordamp.gradle.plugins.stats
+package org.kordamp.gradle.stats
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -27,6 +27,7 @@ class StatsPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.apply(plugin: 'base')
 
-        project.task(STATS, type: StatsTask, group: 'Build')
+        project.task(STATS, type: StatsTask, group: 'Build',
+            description: 'Counts source lines')
     }
 }

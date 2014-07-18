@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kordamp.gradle.plugins.stats
+package org.kordamp.gradle.stats
 
 import groovy.xml.MarkupBuilder
 import org.gradle.api.DefaultTask
@@ -29,6 +29,9 @@ class StatsTask extends DefaultTask {
     @Optional @Input Map<String, Map<String, Object>> paths = [:]
     @Optional @Input List<String> formats = []
     @Optional @Input File reportDir
+
+    int totalFiles = 0
+    int totalLOC = 0
 
     private static final String XML = 'xml'
     private static final String HTML = 'html'
@@ -53,6 +56,7 @@ class StatsTask extends DefaultTask {
 
         if (!paths) {
             project.sourceSets.main.allSource.srcDirs.each { File dir ->
+                if (!dir.exists()) return
                 dir.eachFileRecurse { File file ->
                     if (file.file) {
                         if (file.name.endsWith('.groovy')) {
@@ -65,6 +69,7 @@ class StatsTask extends DefaultTask {
             }
 
             project.sourceSets.test.allSource.srcDirs.each { File dir ->
+                if (!dir.exists()) return
                 dir.eachFileRecurse { File file ->
                     if (file.file) {
                         if (file.name.endsWith('.groovy')) {
@@ -91,9 +96,6 @@ class StatsTask extends DefaultTask {
             }
         }
 
-        int totalFiles = 0
-        int totalLOC = 0
-
         merged.each { type, info ->
             if (info.files) {
                 totalFiles += info.files
@@ -101,7 +103,7 @@ class StatsTask extends DefaultTask {
             }
         }
 
-        if(totalFiles) {
+        if (totalFiles) {
             output(merged, totalFiles.toString(), totalLOC.toString(), new PrintWriter(System.out))
             if (XML in formats) xmlOutput(merged, totalFiles.toString(), totalLOC.toString())
             if (HTML in formats) htmlOutput(merged, totalFiles.toString(), totalLOC.toString())

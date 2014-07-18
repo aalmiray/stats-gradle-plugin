@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.kordamp.gradle.plugins.stats
+package org.kordamp.gradle.stats
 
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -36,8 +36,10 @@ class StatsPluginSpec extends Specification {
     def "Applies plugin and checks default setup"() {
         expect:
         project.tasks.findByName(STATS) == null
+
         when:
         project.apply plugin: StatsPlugin
+
         then:
         Task statsTask = project.tasks.findByName(STATS)
         statsTask != null

@@ -1,6 +1,6 @@
 Stats Gradle Plugin
 ===================
-:version: 0.1.0
+:version: 0.1.1
 
 image:https://travis-ci.org/aalmiray/stats-gradle-plugin.png?branch=master["Build Status", link="https://travis-ci.org/aalmiray/stats-gradle-plugin"]
 image:https://coveralls.io/repos/aalmiray/stats-gradle-plugin/badge.png["Coverage Status", link="https://coveralls.io/r/aalmiray/stats-gradle-plugin"]
@@ -34,7 +34,7 @@ buildscript {
     }
 }
 
-apply plugin: 'org.kordamp.stats'
+apply plugin: 'org.kordamp.gradle.stats'
 ----
 
 The plugin adds a new task named +stats+. This task is responsible for computing
