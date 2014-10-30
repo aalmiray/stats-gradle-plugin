@@ -50,6 +50,8 @@ class StatsTask extends DefaultTask {
         work.java = [name: 'Java Sources', path: 'src/main/java']
         work.testGroovy = [name: 'Groovy Test Sources', path: 'src/test/groovy']
         work.testJava = [name: 'Java Test Sources', path: 'src/test/java']
+        work.integTestGroovy = [name: 'Groovy IntegTest Sources', path: 'src/integration-test/groovy']
+        work.integTestJava = [name: 'Java IntegTest Sources', path: 'src/integration-test/java']
 
         Map merged = [:]
         merged.putAll(work)
@@ -84,7 +86,9 @@ class StatsTask extends DefaultTask {
             merged.putAll(paths)
             merged.each { type, info ->
                 File dir = project.file(info.path)
-                if (!dir.exists()) return
+                try {
+                    if (!dir.exists()) return
+                } catch(FileNotFoundException fnfe) { return }
                 dir.eachFileRecurse { File file ->
                     if (file.file) {
                         if (file.name.endsWith('.groovy')) {
@@ -133,22 +137,22 @@ class StatsTask extends DefaultTask {
 
     private void output(Map<String, Map<String, Object>> work, String totalFiles, String totalLOC, Writer out) {
         out.println '''
-            +----------------------+-------+-------+
-            | Name                 | Files |  LOC  |
-            +----------------------+-------+-------+'''.stripIndent(8)
+            +--------------------------+-------+-------+
+            | Name                     | Files |  LOC  |
+            +--------------------------+-------+-------+'''.stripIndent(8)
 
         work.each { type, info ->
             if (info.files) {
                 out.println '    | ' +
-                    info.name.padRight(20, ' ') + ' | ' +
+                    info.name.padRight(24, ' ') + ' | ' +
                     info.files.toString().padLeft(5, ' ') + ' | ' +
                     info.lines.toString().padLeft(5, ' ') + ' | '
             }
         }
 
-        out.println '    +----------------------+-------+-------+'
-        out.println '    | Totals               | ' + totalFiles.padLeft(5, ' ') + ' | ' + totalLOC.padLeft(5, ' ') + ' | '
-        out.println '    +----------------------+-------+-------+\n'
+        out.println '    +--------------------------+-------+-------+'
+        out.println '    | Totals                   | ' + totalFiles.padLeft(5, ' ') + ' | ' + totalLOC.padLeft(5, ' ') + ' | '
+        out.println '    +--------------------------+-------+-------+\n'
         out.flush()
     }
 
