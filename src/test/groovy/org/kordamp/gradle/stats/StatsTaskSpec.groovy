@@ -69,7 +69,7 @@ class StatsTaskSpec extends Specification {
         task.computeLoc()
 
         then:
-        11 == task.totalFiles
-        116 == task.totalLOC
+        12 == task.totalFiles
+        137 == task.totalLOC
     }
 }
