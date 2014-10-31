@@ -47,6 +47,12 @@ dependencies {
     }
 }
 
+
+tasks.withType(JavaCompile) {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+}
+
 task sourceJar(type: Jar) {
     group 'Build'
     description 'An archive of the source code'
