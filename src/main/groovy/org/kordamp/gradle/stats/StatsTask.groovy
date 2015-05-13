@@ -50,8 +50,10 @@ class StatsTask extends DefaultTask {
         work.java = [name: 'Java Sources', path: 'src/main/java']
         work.testGroovy = [name: 'Groovy Test Sources', path: 'src/test/groovy']
         work.testJava = [name: 'Java Test Sources', path: 'src/test/java']
-        work.integTestGroovy = [name: 'Groovy IntegTest Sources', path: 'src/integration-test/groovy']
-        work.integTestJava = [name: 'Java IntegTest Sources', path: 'src/integration-test/java']
+        work.integTestGroovy = [name: 'Groovy Integration Tests', path: 'src/integration-test/groovy']
+        work.integTestJava = [name: 'Java Integration Tests', path: 'src/integration-test/java']
+        work.funcTestGroovy = [name: 'Groovy Functional Tests', path: 'src/functional-test/groovy']
+        work.funcTestJava = [name: 'Java Functional Tests', path: 'src/functional-test/java']
 
         Map merged = [:]
         merged.putAll(work)
