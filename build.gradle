@@ -20,10 +20,10 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
         classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:0.6'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.9'
     }
 }
 
@@ -41,12 +41,11 @@ repositories {
 
 dependencies {
     compile gradleApi()
-    testCompile 'junit:junit:4.11'
-    testCompile('org.spockframework:spock-core:0.7-groovy-2.0') {
+    testCompile 'junit:junit:4.12'
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.3') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
 }
-
 
 tasks.withType(JavaCompile) {
     sourceCompatibility = 1.6
