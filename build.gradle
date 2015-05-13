@@ -33,6 +33,7 @@ apply from: 'gradle/publishing.gradle'
 apply from: 'gradle/code-coverage.gradle'
 apply from: 'gradle/code-quality.gradle'
 apply plugin: 'com.github.ben-manes.versions'
+apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'build-dashboard'
 
 repositories {
