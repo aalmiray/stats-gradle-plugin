@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2015 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ buildscript {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
         classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.9'
+        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
     }
 }
 
@@ -49,6 +49,11 @@ dependencies {
 }
 
 tasks.withType(JavaCompile) {
+    sourceCompatibility = 1.6
+    targetCompatibility = 1.6
+}
+
+tasks.withType(GroovyCompile) {
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
 }
