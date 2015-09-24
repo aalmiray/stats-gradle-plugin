@@ -1,12 +1,10 @@
 Stats Gradle Plugin
 ===================
-:version: 0.1.1
+:version: 0.1.5
 
 image:https://travis-ci.org/aalmiray/stats-gradle-plugin.png?branch=master["Build Status", link="https://travis-ci.org/aalmiray/stats-gradle-plugin"]
 image:https://coveralls.io/repos/aalmiray/stats-gradle-plugin/badge.png["Coverage Status", link="https://coveralls.io/r/aalmiray/stats-gradle-plugin"]
-image:http://img.shields.io/:semver-{version}-blue.svg["Semantic Versioning", link="http://semver.org"]
-
-image::https://api.bintray.com/packages/aalmiray/kordamp/stats-gradle-plugin/images/download.png["Bintray", link="https://bintray.com/aalmiray/kordamp/stats-gradle-plugin"]
+image:https://api.bintray.com/packages/aalmiray/kordamp/stats-gradle-plugin/images/download.svg[Download, link="https://bintray.com/aalmiray/kordamp/stats-gradle-plugin/_latestVersion"]
 
 == Stats Gradle Plugin
 
