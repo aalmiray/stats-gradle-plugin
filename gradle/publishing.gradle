@@ -1,5 +1,5 @@
 /*
- * Copyright 2014 the original author or authors.
+ * Copyright 2014-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -76,10 +76,11 @@ publishing {
     publications {
         mavenCustom(MavenPublication) {
             from components.java
-            artifact sourceJar
+            artifact sourcesJar
 
             pom.withXml {
                 asNode().children().last() + pomConfig
+                asNode().appendNode('description', project.project_description)
             }
         }
     }
@@ -109,5 +110,25 @@ bintray {
                 'gradle-plugin': 'org.kordamp.gradle.stats:org.kordamp.gradle:stats-gradle-plugin'
             ]
         }
+    }
+}
+
+pluginBundle {
+    website = project.project_url
+    vcsUrl = project.project_scm
+    description = project.project_description
+    tags = ['stats']
+
+    plugins {
+        statsPlugin {
+            id = 'org.kordamp.gradle.stats'
+            displayName = 'Stats Gradle Plugin'
+        }
+    }
+
+    mavenCoordinates {
+        groupId = project.group
+        artifactId = project.name
+        version = project.version
     }
 }

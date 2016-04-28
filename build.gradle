@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2015 the original author or authors.
+ * Copyright 2014-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,21 @@
  * limitations under the License.
  */
 
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
-        classpath 'nl.javadude.gradle.plugins:license-gradle-plugin:0.11.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.11.3'
-    }
+plugins {
+    id 'maven-publish'
+    id 'com.jfrog.bintray' version '1.6'
+    id 'net.nemerosa.versioning' version '1.7.1'
+    id 'com.github.kt3k.coveralls' version '2.6.3'
+    id 'com.github.ben-manes.versions' version '0.12.0'
+    id 'com.gradle.plugin-publish' version '0.9.4'
+    id 'com.github.hierynomus.license' version '0.11.0'
+    id 'idea'
+    id 'groovy'
 }
 
-apply plugin: 'idea'
-apply plugin: 'groovy'
 apply from: 'gradle/publishing.gradle'
 apply from: 'gradle/code-coverage.gradle'
 apply from: 'gradle/code-quality.gradle'
-apply plugin: 'com.github.ben-manes.versions'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'build-dashboard'
 
 repositories {
     jcenter()
@@ -43,7 +37,7 @@ repositories {
 dependencies {
     compile gradleApi()
     testCompile 'junit:junit:4.12'
-    testCompile('org.spockframework:spock-core:1.0-groovy-2.3') {
+    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
         exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
 }
@@ -58,15 +52,39 @@ tasks.withType(GroovyCompile) {
     targetCompatibility = 1.6
 }
 
-task sourceJar(type: Jar) {
+javadoc {
+    excludes = ['**/*.html', 'META-INF/**']
+
+    options.use         = true
+    options.splitIndex  = true
+    options.encoding    = 'UTF-8'
+    options.author      = true
+    options.version     = true
+    options.windowTitle = "$project.name $project.version API"
+    options.docTitle    = "$project.name $project.version API"
+    options.links       = ['http://docs.oracle.com/javase/7/docs/api/']
+}
+
+task sourcesJar(type: Jar) {
     group 'Build'
     description 'An archive of the source code'
     classifier 'sources'
     from sourceSets.main.allSource
 }
 
-jar.finalizedBy sourceJar
+task javadocJar(type: Jar) {
+    group 'Build'
+    description 'An archive of the javadoc'
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+jar.finalizedBy sourcesJar
+jar.finalizedBy javadocJar
 
 artifacts {
-    sourceJar
+    sourcesJar
+    javadocJar
 }
+
+task publishRelease(dependsOn: [bintrayUpload, publishPlugins]) {}
