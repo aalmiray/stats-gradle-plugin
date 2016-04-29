@@ -18,6 +18,7 @@ package org.kordamp.gradle.stats
 import org.gradle.api.Project
 import org.gradle.api.plugins.GroovyPlugin
 import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.plugins.scala.ScalaPlugin
 import org.gradle.testfixtures.ProjectBuilder
 import spock.lang.Specification
 
@@ -48,6 +49,40 @@ class StatsTaskSpec extends Specification {
         13 == task.totalLOC
     }
 
+    void "Calculate stats on basic Scala project"() {
+        given:
+        testRootDir = new File('src/test/projects/basic_scala')
+        project = ProjectBuilder.builder().withName('test')
+            .withProjectDir(testRootDir).build()
+        project.apply(plugin: ScalaPlugin)
+        project.apply(plugin: StatsPlugin)
+        StatsTask task = project.tasks.findByName(STATS)
+
+        when:
+        task.computeLoc()
+
+        then:
+        2 == task.totalFiles
+        13 == task.totalLOC
+    }
+
+    void "Calculate stats on basic project"() {
+        given:
+        testRootDir = new File('src/test/projects/basic_all')
+        project = ProjectBuilder.builder().withName('test')
+            .withProjectDir(testRootDir).build()
+        project.apply(plugin: JavaPlugin)
+        project.apply(plugin: StatsPlugin)
+        StatsTask task = project.tasks.findByName(STATS)
+
+        when:
+        task.computeLoc()
+
+        then:
+        10 == task.totalFiles
+        37 == task.totalLOC
+    }
+
     void "Calculate stats on basic Griffon project"() {
         given:
         testRootDir = new File('src/test/projects/basic_griffon')
@@ -69,6 +104,9 @@ class StatsTaskSpec extends Specification {
             'griffon-app/i18n',
             'src/main/resources'
         ]
+        project.sourceSets.maybeCreate('integrationTest').groovy.srcDirs = [
+            'src/integration-test/groovy'
+        ]
 
         StatsTask task = project.tasks.findByName(STATS)
         task.paths = [
@@ -84,7 +122,7 @@ class StatsTaskSpec extends Specification {
         task.computeLoc()
 
         then:
-        12 == task.totalFiles
-        137 == task.totalLOC
+        16 == task.totalFiles
+        151 == task.totalLOC
     }
 }

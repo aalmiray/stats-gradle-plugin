@@ -55,6 +55,23 @@ $ gradle stats
 
 ----
 
+It's possible to generate an aggregate report when multiple projects are configured. Simply add the following to the
+root project
+
+[source, groovy]
+----
+task aggregateStatsReport(type: org.kordamp.gradle.stats.AggregateStatsReportTask) {}
+----
+
+You may define a value for the `projects` property (a collection of project names) if you want desire to limit the number
+of projects to be queried for stats. The default setting is to query all subprojects. Note that the `stats` task must have
+been called before the aggregate task, such as
+
+[source]
+----
+$ gradle stats aggregateStatsReport
+----
+
 == Configuration
 
 The following properties can be configured for the +stats+ task
@@ -62,6 +79,7 @@ The following properties can be configured for the +stats+ task
 formats:: List of output formats. Valid values are +xml+, +html+ and +txt+.
 reportDir:: Directory where output reports should be placed. default value is
 +project.file("${project.buildDir}/reports/stats")+
+counters:: a Map of additional `org.kordamp.gradle.stats.Counter` implementations, keyed by extension.
 paths:: Maps of additional source paths that contain sources to be counted.
 
 The following configuration can be used in a Griffon project
@@ -100,3 +118,39 @@ Which may make the +stats+ task output something similar to
     | Totals               |    11 |   116 |
     +----------------------+-------+-------+
 ----
+
+You may restrict a path to match an specifix file type, such as `java` or any other supported file extension, for example
+
+[source,groovy]
+----
+stats {
+    formats = ['xml', 'html', 'txt']
+    paths = [
+        foo: [name: 'Foos', path: 'src/foo', extension: 'foo']
+    ]
+}
+----
+
+== Supported Extensions
+
+ * java
+ * groovy
+ * scala
+ * kt (Kotlin)
+ * js
+ * css
+ * scss (SASS)
+ * xml
+ * html
+ * fxml (JavaFX FXML)
+ * properties
+ * sql
+
+== Supported Paths
+
+All project SourceSets will be queried when calculating stats, however the following paths have special treatment for
+reporting their name:
+
+ * src/test
+ * src/integration-test
+ * src/functional-test
