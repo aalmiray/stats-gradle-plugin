@@ -49,7 +49,7 @@ class AggregateStatsReportTask extends DefaultTask {
         projects.each { name ->
             Project p = project.project(name)
             StatsTask t = p.tasks.findByName('stats')
-            if (!t) return
+            if (!t || !t.xmlReport.exists()) return
             def xml = new XmlSlurper().parse(t.xmlReport)
             xml.category.each { category ->
                 String n = category.@name.text() ? category.@name.text() : 'Totals'
