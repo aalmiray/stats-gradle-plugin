@@ -28,7 +28,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.kordamp.gradle:stats-gradle-plugin:{version}'
+        classpath 'org.kordamp.gradle:project-name}:{plugin-version}'
     }
 }
 
