@@ -157,22 +157,22 @@ class StatsTask extends DefaultTask {
     }
 
     private void output(Map<String, Map<String, Object>> work, int max, String totalFiles, String totalLOC, Writer out) {
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
-        out.println '    | ' + 'Name'.padRight(max, ' ') + ' | Files |   LOC |'
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
+        out.println '    +-' + ('-' * max) + '-+--------+--------+'
+        out.println '    | ' + 'Name'.padRight(max, ' ') + ' |  Files |    LOC |'
+        out.println '    +-' + ('-' * max) + '-+--------+--------+'
 
         work.each { type, info ->
             if (info.files) {
                 out.println '    | ' +
                     info.name.padRight(max, ' ') + ' | ' +
-                    info.files.toString().padLeft(5, ' ') + ' | ' +
-                    info.lines.toString().padLeft(5, ' ') + ' |'
+                    info.files.toString().padLeft(6, ' ') + ' | ' +
+                    info.lines.toString().padLeft(6, ' ') + ' |'
             }
         }
 
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
-        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(5, ' ') + ' | ' + totalLOC.padLeft(5, ' ') + ' |'
-        out.println '    +-' + ('-' * max) + '-+-------+-------+\n'
+        out.println '    +-' + ('-' * max) + '-+--------+--------+'
+        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(6, ' ') + ' | ' + totalLOC.padLeft(6, ' ') + ' |'
+        out.println '    +-' + ('-' * max) + '-+--------+--------+\n'
 
         out.flush()
     }

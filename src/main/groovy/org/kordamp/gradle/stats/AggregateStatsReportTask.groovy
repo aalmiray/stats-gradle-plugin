@@ -73,20 +73,20 @@ class AggregateStatsReportTask extends DefaultTask {
     }
 
     private void output(Map<String, Map<String, Object>> stats, int max, String totalFiles, String totalLOC, Writer out) {
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
-        out.println '    | ' + 'Name'.padRight(max, ' ') + ' | Files |   LOC |'
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
+        out.println '    +-' + ('-' * max) + '-+---------+---------+'
+        out.println '    | ' + 'Name'.padRight(max, ' ') + ' |   Files |     LOC |'
+        out.println '    +-' + ('-' * max) + '-+---------+---------+'
 
         stats.each { category, info ->
             out.println '    | ' +
                 category.padRight(max, ' ') + ' | ' +
-                info.fileCount.toString().padLeft(5, ' ') + ' | ' +
-                info.locCount.toString().padLeft(5, ' ') + ' |'
+                info.fileCount.toString().padLeft(7, ' ') + ' | ' +
+                info.locCount.toString().padLeft(7, ' ') + ' |'
         }
 
-        out.println '    +-' + ('-' * max) + '-+-------+-------+'
-        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(5, ' ') + ' | ' + totalLOC.padLeft(5, ' ') + ' |'
-        out.println '    +-' + ('-' * max) + '-+-------+-------+\n'
+        out.println '    +-' + ('-' * max) + '-+---------+---------+'
+        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(7, ' ') + ' | ' + totalLOC.padLeft(7, ' ') + ' |'
+        out.println '    +-' + ('-' * max) + '-+---------+---------+\n'
 
         out.flush()
     }

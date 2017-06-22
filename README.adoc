@@ -1,10 +1,14 @@
 Stats Gradle Plugin
 ===================
-:version: 0.2.0
+:linkattrs:
+:project-name: jdeps-gradle-plugin
+:plugin-version: 0.2.0
 
-image:https://travis-ci.org/aalmiray/stats-gradle-plugin.png?branch=master["Build Status", link="https://travis-ci.org/aalmiray/stats-gradle-plugin"]
-image:https://coveralls.io/repos/aalmiray/stats-gradle-plugin/badge.png["Coverage Status", link="https://coveralls.io/r/aalmiray/stats-gradle-plugin"]
-image:https://api.bintray.com/packages/aalmiray/kordamp/stats-gradle-plugin/images/download.svg[Download, link="https://bintray.com/aalmiray/kordamp/stats-gradle-plugin/_latestVersion"]
+image:http://img.shields.io/travis/aalmiray/{project-name}/master.svg["Build Status", link="https://travis-ci.org/aalmiray/{project-name}"]
+image:http://img.shields.io/coveralls/aalmiray/{project-name}/master.svg["Coverage Status", link="https://coveralls.io/r/aalmiray/{project-name}"]
+image:http://img.shields.io/badge/license-ASF2-blue.svg["Apache License 2", link="http://www.apache.org/licenses/LICENSE-2.0.txt"]
+image:https://api.bintray.com/packages/aalmiray/kordamp/{project-name}/images/download.svg[link="https://bintray.com/aalmiray/kordamp/{project-name}/_latestVersion"]
+image:https://img.shields.io/badge/donations-Patreon-orange.svg[link="https://www.patreon.com/user?u=6609318"]
 
 == Stats Gradle Plugin
 
@@ -18,7 +22,7 @@ http://griffon.codehaus.org[griffon] stats command.
 == Usage
 
 The plugin is available from https://bintray.com[Bintray's JCenter]. The latest release
-is {version}. You can use it as follows
+is {plugin-version}. You can use it as follows
 
 [source,groovy]
 [subs="attributes"]
