@@ -1,7 +1,7 @@
 Stats Gradle Plugin
 ===================
 :linkattrs:
-:project-name: jdeps-gradle-plugin
+:project-name: stats-gradle-plugin
 :plugin-version: 0.2.0
 
 image:http://img.shields.io/travis/aalmiray/{project-name}/master.svg["Build Status", link="https://travis-ci.org/aalmiray/{project-name}"]
@@ -13,7 +13,7 @@ image:https://img.shields.io/badge/donations-Patreon-orange.svg[link="https://ww
 == Stats Gradle Plugin
 
 A Gradle plugin for counting lines of code in the same fashion as the
-http://griffon.codehaus.org[griffon] stats command.
+http://grails.org[Grails] stats command.
 
 == Requirements
 
@@ -32,7 +32,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.kordamp.gradle:project-name}:{plugin-version}'
+        classpath 'org.kordamp.gradle:{project-name}:{plugin-version}'
     }
 }
 
