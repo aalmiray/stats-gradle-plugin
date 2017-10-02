@@ -1,5 +1,9 @@
 language: java
 script: ./gradlew clean build jacocoTestReport
 jdk: oraclejdk7
+addons:
+  apt:
+    packages:
+    - oracle-java8-installer
 env: TERM=dumb
 after_success: ./gradlew coveralls
