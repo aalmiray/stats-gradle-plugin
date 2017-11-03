@@ -86,7 +86,7 @@ class StatsTask extends DefaultTask {
         merged.properties = [name: 'Properties', path: '.*', extension: 'properties']
         merged.sql = [name: 'SQL', path: '.*', extension: 'sql']
 
-        project.sourceSets.each { sourceSet ->
+        resolveSourceSets().each { sourceSet ->
             sourceSet.allSource.srcDirs.each { File dir ->
                 if (!dir.exists()) return
                 dir.eachFileRecurse { File file ->
@@ -123,6 +123,14 @@ class StatsTask extends DefaultTask {
             xmlOutput(merged, totalFiles.toString(), totalLOC.toString())
             if (HTML in formats) htmlOutput(merged, totalFiles.toString(), totalLOC.toString())
             if (TXT in formats) output(merged, max, totalFiles.toString(), totalLOC.toString(), new PrintWriter(getOutputFile(TXT)))
+        }
+    }
+
+    private resolveSourceSets() {
+        if (project.plugins.hasPlugin('com.android.library')) {
+            project.android.sourceSets
+        } else {
+            project.sourceSets
         }
     }
 
