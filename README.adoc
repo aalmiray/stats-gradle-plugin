@@ -2,7 +2,7 @@ Stats Gradle Plugin
 ===================
 :linkattrs:
 :project-name: stats-gradle-plugin
-:plugin-version: 0.2.0
+:plugin-version: 0.2.1
 
 image:http://img.shields.io/travis/aalmiray/{project-name}/master.svg["Build Status", link="https://travis-ci.org/aalmiray/{project-name}"]
 image:http://img.shields.io/coveralls/aalmiray/{project-name}/master.svg["Coverage Status", link="https://coveralls.io/r/aalmiray/{project-name}"]
@@ -50,7 +50,7 @@ $ gradle stats
 :stats
 
     +----------------------+-------+-------+
-    | Name                 | Files |  LOC  |
+    | Name                 | Files |   LOC |
     +----------------------+-------+-------+
     | Java Sources         |     1 |     5 |
     +----------------------+-------+-------+
@@ -86,7 +86,7 @@ reportDir:: Directory where output reports should be placed. default value is
 counters:: a Map of additional `org.kordamp.gradle.stats.Counter` implementations, keyed by extension.
 paths:: Maps of additional source paths that contain sources to be counted.
 
-The following configuration can be used in a Griffon project
+The following configuration may be used in a Griffon project for example
 
 [source,groovy]
 ----
@@ -108,7 +108,7 @@ Which may make the +stats+ task output something similar to
 [source,groovy]
 ----
     +----------------------+-------+-------+
-    | Name                 | Files |  LOC  |
+    | Name                 | Files |   LOC |
     +----------------------+-------+-------+
     | Groovy Sources       |     4 |    28 |
     | Java Sources         |     1 |     2 |
@@ -153,7 +153,7 @@ stats {
 == Supported Paths
 
 All project SourceSets will be queried when calculating stats, however the following paths have special treatment for
-reporting their name:
+reporting their names:
 
  * src/test
  * src/integration-test

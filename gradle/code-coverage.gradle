@@ -15,10 +15,9 @@
  */
 
 apply plugin: 'jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
 
 jacoco {
-    toolVersion = '0.7.6.201602180812'
+    toolVersion = '0.7.9'
 }
 
 jacocoTestReport {

@@ -19,7 +19,7 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'java-gradle-plugin'
-    id 'com.jfrog.bintray'              version '1.7.3'
+    id 'com.jfrog.bintray'              version '1.8.0'
     id 'net.nemerosa.versioning'        version '2.6.1'
     id 'com.github.ben-manes.versions'  version '0.17.0'
     id 'com.gradle.plugin-publish'      version '0.9.9'
