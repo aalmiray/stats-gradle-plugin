@@ -217,23 +217,23 @@ class StatsTask extends DefaultTask {
             table(border: 1) {
                 tr {
                     th('Name')
-                    th('Files')
-                    th('LOC')
+                    th(align:'right', 'Files')
+                    th(align:'right', 'LOC')
                 }
                 work.each { type, info ->
                     if (info.files) {
                         tr(style: (i++) % 2 ? 'background-color:lightblue' : 'background-color:FFF') {
                             td(info.name)
-                            td(info.files.toString())
-                            td(info.lines.toString())
+                            td(align:'right', info.files.toString())
+                            td(align:'right', info.lines.toString())
                         }
                     }
                 }
                 tr(style: 'background-color:lightgreen') {
                     b {
                         td('Total')
-                        td(totalFiles)
-                        td(totalLOC)
+                        td(align:'right', totalFiles)
+                        td(align:'right', totalLOC)
                     }
                 }
             }

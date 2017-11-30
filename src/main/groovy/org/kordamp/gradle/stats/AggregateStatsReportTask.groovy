@@ -27,6 +27,7 @@ import org.gradle.api.tasks.TaskAction
  */
 class AggregateStatsReportTask extends DefaultTask {
     @Optional @Input Collection<String> projects = []
+    @Optional @Input List<String> formats = []
     @Optional @Input File reportDir
 
     File xmlReport
@@ -69,23 +70,30 @@ class AggregateStatsReportTask extends DefaultTask {
 
             output(stats, max, totals.fileCount.toString(), totals.locCount.toString(), new PrintWriter(System.out))
             xmlOutput(stats, totals.fileCount.toString(), totals.locCount.toString())
+            if (HTML in formats) htmlOutput(stats, totals.fileCount.toString(), totals.locCount.toString())
+            if (TXT in formats) output(stats, max, totals.fileCount.toString(), totals.locCount.toString(), new PrintWriter(getOutputFile(TXT)))
         }
     }
 
     private void output(Map<String, Map<String, Object>> stats, int max, String totalFiles, String totalLOC, Writer out) {
+        int padFiles = Math.max(totalFiles.toString().length(), 7)
+        int padLocs  = Math.max(totalLOC.toString().length(), 7)
+
         out.println '    +-' + ('-' * max) + '-+---------+---------+'
-        out.println '    | ' + 'Name'.padRight(max, ' ') + ' |   Files |     LOC |'
+        out.println '    | ' + 'Name'.padRight(max, ' ') + ' | '+
+            'Files'.padLeft(padFiles, ' ') + ' | ' +
+            'LOC'.padLeft(padLocs, ' ') + ' |'
         out.println '    +-' + ('-' * max) + '-+---------+---------+'
 
         stats.each { category, info ->
             out.println '    | ' +
                 category.padRight(max, ' ') + ' | ' +
-                info.fileCount.toString().padLeft(7, ' ') + ' | ' +
-                info.locCount.toString().padLeft(7, ' ') + ' |'
+                info.fileCount.toString().padLeft(padFiles, ' ') + ' | ' +
+                info.locCount.toString().padLeft(padLocs, ' ') + ' |'
         }
 
         out.println '    +-' + ('-' * max) + '-+---------+---------+'
-        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(7, ' ') + ' | ' + totalLOC.padLeft(7, ' ') + ' |'
+        out.println '    | ' + 'Totals'.padRight(max, ' ') + ' | ' + totalFiles.padLeft(padFiles, ' ') + ' | ' + totalLOC.padLeft(padLocs, ' ') + ' |'
         out.println '    +-' + ('-' * max) + '-+---------+---------+\n'
 
         out.flush()
@@ -103,6 +111,33 @@ class AggregateStatsReportTask extends DefaultTask {
                 name('Total')
                 fileCount(totalFiles)
                 loc(totalLOC)
+            }
+        }
+    }
+
+    private void htmlOutput(Map<String, Map<String, Object>> stats, String totalFiles, String totalLOC) {
+        int i = 0
+        new MarkupBuilder(new FileWriter(getOutputFile(HTML))).html {
+            table(border: 1) {
+                tr {
+                    th('Name')
+                    th(align:'right', 'Files')
+                    th(align:'right', 'LOC')
+                }
+                stats.each { type, info ->
+                    tr(style: (i++) % 2 ? 'background-color:lightblue' : 'background-color:FFF') {
+                        td(type)
+                        td(align:'right', info.fileCount.toString())
+                        td(align:'right', info.locCount.toString())
+                    }
+                }
+                tr(style: 'background-color:lightgreen') {
+                    b {
+                        td('Total')
+                        td(align:'right', totalFiles)
+                        td(align:'right', totalLOC)
+                    }
+                }
             }
         }
     }
