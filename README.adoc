@@ -2,7 +2,7 @@ Stats Gradle Plugin
 ===================
 :linkattrs:
 :project-name: stats-gradle-plugin
-:plugin-version: 0.2.1
+:plugin-version: 0.2.2
 
 image:http://img.shields.io/travis/aalmiray/{project-name}/master.svg["Build Status", link="https://travis-ci.org/aalmiray/{project-name}"]
 image:http://img.shields.io/coveralls/aalmiray/{project-name}/master.svg["Coverage Status", link="https://coveralls.io/r/aalmiray/{project-name}"]
@@ -149,6 +149,7 @@ stats {
  * fxml (JavaFX FXML)
  * properties
  * sql
+ * yaml
 
 == Supported Paths
 

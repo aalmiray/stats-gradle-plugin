@@ -61,7 +61,8 @@ class StatsTask extends DefaultTask {
             html      : 'HTML',
             fxml      : 'FXML',
             properties: 'Properties',
-            sql       : 'SQL'
+            sql       : 'SQL',
+            yaml      : 'YAML'
         ].each { extension, name ->
             ['test', 'integration-test', 'functional-test'].each { source ->
                 String classifier = StatsTask.getPropertyNameForLowerCaseHyphenSeparatedName(source)
@@ -85,6 +86,7 @@ class StatsTask extends DefaultTask {
         merged.fxml = [name: 'FXML Sources', path: '.*', extension: 'fxml']
         merged.properties = [name: 'Properties', path: '.*', extension: 'properties']
         merged.sql = [name: 'SQL', path: '.*', extension: 'sql']
+        merged.yaml = [name: 'Yaml', path: '.*', extension: 'yaml']
 
         resolveSourceSets().each { sourceSet ->
             sourceSet.allSource.srcDirs.each { File dir ->
@@ -160,6 +162,7 @@ class StatsTask extends DefaultTask {
         if (!instances.fxml) instances.fxml = new XmlCounter()
         if (!instances.properties) instances.properties = new PropertiesCounter()
         if (!instances.sql) instances.sql = new SqlCounter()
+        if (!instances.yaml) instances.yaml = new HashCounter()
 
         instances
     }

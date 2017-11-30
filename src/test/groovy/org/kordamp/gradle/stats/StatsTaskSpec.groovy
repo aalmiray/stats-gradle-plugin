@@ -79,8 +79,8 @@ class StatsTaskSpec extends Specification {
         task.computeLoc()
 
         then:
-        10 == task.totalFiles
-        37 == task.totalLOC
+        11 == task.totalFiles
+        41 == task.totalLOC
     }
 
     void "Calculate stats on basic Griffon project"() {
