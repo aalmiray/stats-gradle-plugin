@@ -62,7 +62,8 @@ class StatsTask extends DefaultTask {
             fxml      : 'FXML',
             properties: 'Properties',
             sql       : 'SQL',
-            yaml      : 'YAML'
+            yaml      : 'YAML',
+            clojure   : 'Clojure'
         ].each { extension, name ->
             ['test', 'integration-test', 'functional-test'].each { source ->
                 String classifier = StatsTask.getPropertyNameForLowerCaseHyphenSeparatedName(source)
@@ -87,6 +88,7 @@ class StatsTask extends DefaultTask {
         merged.properties = [name: 'Properties', path: '.*', extension: 'properties']
         merged.sql = [name: 'SQL', path: '.*', extension: 'sql']
         merged.yaml = [name: 'Yaml', path: '.*', extension: 'yaml']
+        merged.clj = [name: 'Clojure', path: '.*', extension: 'clj']
 
         resolveSourceSets().each { sourceSet ->
             sourceSet.allSource.srcDirs.each { File dir ->
@@ -163,6 +165,7 @@ class StatsTask extends DefaultTask {
         if (!instances.properties) instances.properties = new PropertiesCounter()
         if (!instances.sql) instances.sql = new SqlCounter()
         if (!instances.yaml) instances.yaml = new HashCounter()
+        if (!instances.clj) instances.clj = new SemiColonCounter()
 
         instances
     }

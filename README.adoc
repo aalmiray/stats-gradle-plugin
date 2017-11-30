@@ -123,7 +123,7 @@ Which may make the +stats+ task output something similar to
     +----------------------+-------+-------+
 ----
 
-You may restrict a path to match an specifix file type, such as `java` or any other supported file extension, for example
+You may restrict a path to match an specific file type, such as `java` or any other supported file extension, for example
 
 [source,groovy]
 ----
