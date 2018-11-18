@@ -90,8 +90,10 @@ class StatsTask extends DefaultTask {
         merged.yaml = [name: 'Yaml', path: '.*', extension: 'yaml']
         merged.clj = [name: 'Clojure', path: '.*', extension: 'clj']
 
-        resolveSourceSets().each { sourceSet ->
-            sourceSet.allSource.srcDirs.each { File dir ->
+        boolean android = hasAndroidPlugin()
+        resolveSourceSets(android).each { sourceSet ->
+            def srcDirs = android ? sourceSet.javaDirectories : sourceSet.allSource.srcDirs
+            srcDirs.each { File dir ->
                 if (!dir.exists()) return
                 dir.eachFileRecurse { File file ->
                     if (file.file) {
@@ -130,12 +132,25 @@ class StatsTask extends DefaultTask {
         }
     }
 
-    private resolveSourceSets() {
-        if (project.plugins.hasPlugin('com.android.library')) {
-            project.android.sourceSets
-        } else {
-            project.sourceSets
+    private def resolveSourceSets(boolean android) {
+        if (android) {
+            return project.android.sourceSets
         }
+        project.sourceSets
+    }
+
+    private boolean hasAndroidPlugin() {
+        androidPlugins().any { project.plugins.hasPlugin(it) }
+    }
+
+    private List<String> androidPlugins() {
+        [
+                'com.android.library',
+                'com.android.feature',
+                'com.android.instantapp',
+                'com.android.application',
+                'com.android.test',
+        ]
     }
 
     private static void countLines(Map<String, Object> work, Counter counter, File file) {
